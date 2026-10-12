@@ -1,0 +1,18 @@
+{
+  "KPlugin": {
+    "Id": "org.loop.eyes.cursor",
+    "Name": "Loop Eyes Cursor",
+    "Description": "Provides desktop cursor positions to the local Loop Eyes widget",
+    "Version": "0.1.0",
+    "License": "MIT",
+    "Icon": "face-smile",
+    "Authors": [
+      {
+        "Name": "Loop"
+      }
+    ]
+  },
+  "X-Plasma-API": "javascript",
+  "X-Plasma-MainScript": "code/main.js",
+  "KPackageStructure": "KWin/Script"
+}

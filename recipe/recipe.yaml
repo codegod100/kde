@@ -1,0 +1,46 @@
+context:
+  version: "0.1.2"
+
+package:
+  name: loop-eyes
+  version: ${{ version }}
+
+source:
+  path: ..
+  use_gitignore: true
+
+build:
+  noarch: generic
+  number: 0
+  script: build.sh
+
+requirements:
+  run:
+    - __linux
+
+tests:
+  - script:
+      - loop-eyes-install --version
+      - loop-eyes-install --help
+      - loop-eyes-uninstall --help
+      - test ! -d "$PREFIX/share/loop-eyes/source/build"
+      - test -z "$(find "$PREFIX/share/loop-eyes" -name '*.so')"
+  - package_contents:
+      bin:
+        - loop-eyes-install
+        - loop-eyes-uninstall
+      files:
+        - share/loop-eyes/source/backend/plugin.cpp
+        - share/loop-eyes/source/panel/contents/ui/main.qml
+        - share/loop-eyes/source/plasmoid/contents/images/loop-avatar.png
+        - share/loop-eyes/source/LICENSE
+        - share/loop-eyes/source/LICENSE-AVATAR
+
+about:
+  summary: Loop-inspired KDE Plasma 6 panel head with cursor-following eyes; host-Qt source installer
+  homepage: https://github.com/nandi-conda/loop-eyes
+  repository: https://github.com/nandi-conda/loop-eyes
+  license: MIT AND LicenseRef-Loop-Avatar
+  license_file:
+    - LICENSE
+    - LICENSE-AVATAR

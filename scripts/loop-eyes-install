@@ -1,0 +1,48 @@
+#!/bin/bash
+# SPDX-License-Identifier: MIT
+# Source package installer: use host Qt, never an environment's Qt libraries.
+set -euo pipefail
+case ${1:---help} in
+    --help|-h)
+        echo 'Loop Eyes 0.1.2 — Plasma 6 source installer'
+        echo 'Usage: loop-eyes-install --check | --build-only | --install | --uninstall | --version'
+        echo 'Requires system Plasma 6, CMake, C++ compiler, Qt 6 Core/Qml/DBus development files, qmake6 and kpackagetool6.'
+        echo 'Install does not enable KWin scripts, change panels, or restart the shell.'
+        exit 0 ;;
+    --version) echo '0.1.2'; exit 0 ;;
+    --check|--build-only|--install|--uninstall) mode=$1 ;;
+    *) echo 'Unknown option. Use --help.' >&2; exit 2 ;;
+esac
+prefix=$(cd -- "$(dirname -- "$(readlink -f -- "$0")")/.." && pwd)
+source_dir=${LOOP_EYES_SOURCE_DIR:-"$prefix/share/loop-eyes/source"}
+[[ -f "$source_dir/CMakeLists.txt" ]] || { echo 'Loop Eyes source files are missing.' >&2; exit 1; }
+[[ $(uname -s) == Linux ]] || { echo 'Loop Eyes requires Linux and Plasma 6.' >&2; exit 1; }
+export PATH=/usr/bin:/bin
+unset LD_LIBRARY_PATH LD_PRELOAD QT_PLUGIN_PATH QML_IMPORT_PATH QML2_IMPORT_PATH
+unset CMAKE_PREFIX_PATH CMAKE_TOOLCHAIN_FILE CC CXX CFLAGS CXXFLAGS LDFLAGS
+unset Qt6_DIR Qt6Core_DIR Qt6Qml_DIR Qt6DBus_DIR
+unset CMAKE_LIBRARY_PATH CMAKE_INCLUDE_PATH CMAKE_MODULE_PATH CMAKE_GENERATOR
+unset CPATH C_INCLUDE_PATH CPLUS_INCLUDE_PATH LIBRARY_PATH PKG_CONFIG_PATH
+unset QT_QPA_PLATFORM_PLUGIN_PATH QTDIR QMAKEFEATURES SDKROOT
+unset CMAKE_ARGS CMAKE_CXX_FLAGS CMAKE_EXE_LINKER_FLAGS CMAKE_SHARED_LINKER_FLAGS
+if [[ $mode == --uninstall ]]; then
+    exec /bin/bash "$source_dir/uninstall.sh"
+fi
+for tool in cmake c++ qmake6 kpackagetool6 plasmashell; do
+    command -v "$tool" >/dev/null || { echo "Missing system tool: $tool (see README host dependencies)." >&2; exit 1; }
+done
+qt_libs=$(qmake6 -query QT_INSTALL_LIBS)
+export LOOP_EYES_SYSTEM_QT_DIR="$qt_libs/cmake/Qt6"
+for component in Qt6 Qt6Core Qt6Qml Qt6DBus; do
+    [[ -f "$qt_libs/cmake/$component/${component}Config.cmake" ]] || {
+        echo "Missing system Qt development component: $component" >&2; exit 1;
+    }
+done
+echo "System Qt $(qmake6 -query QT_VERSION); development files found."
+[[ $mode != --check ]] || exit 0
+cache=${XDG_CACHE_HOME:-"$HOME/.cache"}/loop-eyes
+mkdir -p -- "$cache"
+export LOOP_EYES_BUILD_DIR
+LOOP_EYES_BUILD_DIR=$(mktemp -d "$cache/build-0.1.2-XXXXXX")
+echo "Building against host Qt in $LOOP_EYES_BUILD_DIR"
+exec /bin/bash "$source_dir/install.sh" "$mode"

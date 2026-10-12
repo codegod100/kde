@@ -1,0 +1,13 @@
+{
+  "KPlugin": {
+    "Id": "org.loop.eyes.panel",
+    "Name": "Loop Eyes — Panel Head",
+    "Description": "A compact Loop-inspired head with large cursor-following eyes",
+    "Version": "0.1.2",
+    "License": "MIT",
+    "Icon": "face-smile",
+    "Authors": [{"Name": "Loop"}]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0",
+  "KPackageStructure": "Plasma/Applet"
+}

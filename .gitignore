@@ -1,0 +1,6 @@
+build/
+output/
+.pixi/
+*.so
+*.conda
+__pycache__/
