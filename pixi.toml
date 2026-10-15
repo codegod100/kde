@@ -25,5 +25,5 @@ configure = "cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_
 build = { cmd = "cmake --build build", depends-on = ["configure"] }
 test = { cmd = "QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure", depends-on = ["build"] }
 install = { cmd = "sudo $CONDA_PREFIX/bin/cmake --install build", depends-on = ["build"] }
-restart-plasma = "setsid -f plasmashell --replace > /dev/null 2>&1"
+restart-plasma = "sh -c 'setsid -f plasmashell --replace >/dev/null 2>&1'"
 clean = "rm -rf build"
