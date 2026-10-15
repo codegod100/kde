@@ -37,6 +37,10 @@ directory.
 
 1. Install the system libraries (and a C++ compiler). Only the Ubuntu list has
    been tested; the Arch and Fedora names follow those distros' usual naming.
+   You need Plasma 6 with Qt 6.8 or newer: Ubuntu and Kubuntu 24.04 ship
+   Plasma 5 and Qt 6.4, so use Kubuntu 25.04 or newer, or KDE neon. If
+   configure says no Qt 6 development files were found, these packages are
+   missing.
 
    ```sh
    # Arch

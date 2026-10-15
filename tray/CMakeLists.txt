@@ -10,6 +10,26 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(KDE_COMPILERSETTINGS_LEVEL "6.0")
 
+# Check for the system Qt first: without it ECM's KDEInstallDirs fails with a
+# cryptic "No Qt6 qtpaths executable found".
+find_package(Qt6 ${QT_MIN_VERSION} CONFIG QUIET COMPONENTS Core)
+if(NOT Qt6_FOUND)
+    if(Qt6_CONSIDERED_VERSIONS)
+        set(_qt_versions ${Qt6_CONSIDERED_VERSIONS})
+        list(REMOVE_DUPLICATES _qt_versions)
+        list(JOIN _qt_versions ", " _qt_versions)
+        set(_qt_found_text "only found Qt ${_qt_versions}")
+    else()
+        set(_qt_found_text "no Qt 6 development files were found")
+    endif()
+    message(FATAL_ERROR
+        "Qt ${QT_MIN_VERSION} or newer is required and ${_qt_found_text}. "
+        "Qt 6, KDE Frameworks 6 and libplasma must come from your distro, matching "
+        "the Plasma 6 you run; install the packages listed in README.md "
+        "(Ubuntu/KDE neon: qt6-base-dev qt6-declarative-dev libplasma-dev ...). "
+        "Ubuntu/Kubuntu 24.04 does not ship Plasma 6.")
+endif()
+
 find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
