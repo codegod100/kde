@@ -1,0 +1,29 @@
+# Pixi provides the build tooling (cmake, ninja, extra-cmake-modules).
+# Qt 6, KDE Frameworks 6 and libplasma must come from your distro: KF6 and
+# libplasma are not packaged on conda-forge, and the widget has to link against
+# the exact Qt/KF6 that your plasmashell uses anyway. See README for the
+# per-distro package list.
+
+[workspace]
+name = "whitelist-tray"
+channels = ["conda-forge"]
+platforms = ["linux-64", "linux-aarch64"]
+
+[dependencies]
+cmake = ">=3.22"
+ninja = "*"
+extra-cmake-modules = ">=6.10"
+
+[activation.env]
+# Use the system compiler and system Qt/KF6, never anything from the pixi env.
+CC = "/usr/bin/cc"
+CXX = "/usr/bin/c++"
+CMAKE_PREFIX_PATH = "/usr"
+
+[tasks]
+configure = "cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=ON -DECM_DIR=$CONDA_PREFIX/share/ECM/cmake"
+build = { cmd = "cmake --build build", depends-on = ["configure"] }
+test = { cmd = "QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure", depends-on = ["build"] }
+install = { cmd = "sudo $CONDA_PREFIX/bin/cmake --install build", depends-on = ["build"] }
+restart-plasma = "setsid -f plasmashell --replace > /dev/null 2>&1"
+clean = "rm -rf build"

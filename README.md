@@ -28,39 +28,45 @@ The whitelist is stored in the widget's config as `shownItems` (always) and
 
 ## Build and install
 
-Needs Plasma 6 development packages (libplasma, KF6 Config, I18n, IconThemes,
-ItemModels, JobWidgets, KIO, Service, StatusNotifierItem, WindowSystem,
-XmlGui) and Qt 6 with its private GUI headers. Tested building against
-Plasma 6.6 / KF 6.24 / Qt 6.10 (Ubuntu 26.04).
+The build uses [pixi](https://pixi.sh) for the build tools (cmake, ninja,
+extra-cmake-modules). Qt 6, KDE Frameworks 6 and libplasma come from your
+distro: KF6 and libplasma are not on conda-forge, and the widget has to link
+against the same Qt/KF6 that your plasmashell runs on. The pixi tasks use the
+system compiler and system libraries and install into the system plugin
+directory.
 
-Debian/Ubuntu:
+1. Install the system libraries (and a C++ compiler). Only the Ubuntu list has
+   been tested; the Arch and Fedora names follow those distros' usual naming.
 
-```sh
-sudo apt install build-essential cmake ninja-build extra-cmake-modules gettext \
-  qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-declarative-private-dev \
-  libplasma-dev libkf6config-dev libkf6i18n-dev libkf6iconthemes-dev libkf6itemmodels-dev \
-  libkf6jobwidgets-dev libkf6kio-dev libkf6service-dev libkf6statusnotifieritem-dev \
-  libkf6windowsystem-dev libkf6xmlgui-dev
-```
+   ```sh
+   # Arch
+   sudo pacman -S --needed base-devel libplasma kstatusnotifieritem kio kxmlgui kitemmodels kiconthemes
 
-Arch: `sudo pacman -S --needed base-devel cmake ninja extra-cmake-modules libplasma kstatusnotifieritem kio kxmlgui kitemmodels`
+   # Fedora
+   sudo dnf install gcc-c++ qt6-qtbase-private-devel qt6-qtdeclarative-devel libplasma-devel kf6-kstatusnotifieritem-devel kf6-kio-devel kf6-kxmlgui-devel kf6-kitemmodels-devel kf6-kiconthemes-devel kf6-ki18n-devel kf6-kconfig-devel kf6-kservice-devel kf6-kwindowsystem-devel kf6-kjobwidgets-devel
 
-Fedora: `sudo dnf install cmake ninja-build extra-cmake-modules gcc-c++ qt6-qtbase-private-devel qt6-qtdeclarative-devel libplasma-devel kf6-kstatusnotifieritem-devel kf6-kio-devel kf6-kxmlgui-devel kf6-kitemmodels-devel kf6-kiconthemes-devel kf6-ki18n-devel kf6-kconfig-devel kf6-kservice-devel kf6-kwindowsystem-devel kf6-kjobwidgets-devel`
+   # Ubuntu / Kubuntu / KDE neon
+   sudo apt install build-essential gettext qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-declarative-private-dev libplasma-dev libkf6config-dev libkf6i18n-dev libkf6iconthemes-dev libkf6itemmodels-dev libkf6jobwidgets-dev libkf6kio-dev libkf6service-dev libkf6statusnotifieritem-dev libkf6windowsystem-dev libkf6xmlgui-dev
+   ```
 
-Then:
+2. Install pixi if you don't have it: `curl -fsSL https://pixi.sh/install.sh | sh`
 
-```sh
-cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-cmake --build build
-sudo cmake --install build
-plasmashell --replace &   # or log out and back in
-```
+3. Build, test, install and restart Plasma:
+
+   ```sh
+   git clone https://github.com/codegod100/tray && cd tray
+   pixi run test             # configures, builds and runs the tests
+   pixi run install          # sudo install into the system plugin dir
+   pixi run restart-plasma   # or log out and back in
+   ```
+
+Other tasks: `pixi run build`, `pixi run clean`. Without pixi, the same steps
+are plain cmake: `cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr && cmake --build build && sudo cmake --install build`
+(needs cmake, ninja and extra-cmake-modules from your distro).
 
 Add **Whitelist System Tray** to a panel from *Add Widgets…*. You will usually
 want to remove the stock System Tray from that panel, since both trays would
 otherwise show the same apps.
-
-Run the tests with `cmake -B build -DBUILD_TESTING=ON && cmake --build build && ctest --test-dir build`.
 
 ## Layout
 
