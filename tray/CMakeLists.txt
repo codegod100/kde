@@ -27,7 +27,8 @@ if(NOT Qt6_FOUND)
         "Qt 6, KDE Frameworks 6 and libplasma must come from your distro, matching "
         "the Plasma 6 you run; install the packages listed in README.md "
         "(Ubuntu/KDE neon: qt6-base-dev qt6-declarative-dev libplasma-dev ...). "
-        "Ubuntu/Kubuntu 24.04 does not ship Plasma 6.")
+        "On Plasma 5 (e.g. Ubuntu/Kubuntu 24.04) use the Plasma 5 build instead: "
+        "pixi run install-plasma5")
 endif()
 
 find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
