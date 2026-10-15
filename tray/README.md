@@ -37,8 +37,8 @@ directory.
 
 1. Install the system libraries (and a C++ compiler). Only the Ubuntu list has
    been tested; the Arch and Fedora names follow those distros' usual naming.
-   You need Plasma 6 with Qt 6.8 or newer: Ubuntu and Kubuntu 24.04 ship
-   Plasma 5 and Qt 6.4, so use Kubuntu 25.04 or newer, or KDE neon. If
+   This needs Plasma 6 with Qt 6.8 or newer. On Plasma 5 (Ubuntu and
+   Kubuntu 24.04, Debian 12) use the [Plasma 5 build](#plasma-5) instead. If
    configure says no Qt 6 development files were found, these packages are
    missing.
 
@@ -68,6 +68,22 @@ Other tasks: `pixi run build`, `pixi run clean`. Without pixi, the same steps
 are plain cmake: `cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr && cmake --build build && sudo cmake --install build`
 (needs cmake, ninja and extra-cmake-modules from your distro).
 
+### Plasma 5
+
+`plasma5/` is the same widget forked from the Plasma 5.27 tray, for systems
+still on Plasma 5 (check with `plasmashell --version`). It has the same plugin
+id and settings. Tested on Ubuntu 24.04:
+
+```sh
+sudo apt install build-essential gettext qtbase5-dev qtbase5-private-dev qtdeclarative5-dev libkf5plasma-dev libkf5xmlgui-dev libkf5i18n-dev libkf5itemmodels-dev libkf5iconthemes-dev libkf5windowsystem-dev libkf5notifications-dev libkf5config-dev libkf5coreaddons-dev qtwayland5-private-dev qtwayland5-dev-tools libwayland-dev wayland-protocols
+pixi run test-plasma5
+pixi run install-plasma5
+pixi run restart-plasma
+```
+
+The Wayland packages are optional; without them tray icons are not scaled
+for fractional display scaling on Wayland.
+
 Add **Whitelist System Tray** to a panel from *Add Widgets…*. You will usually
 want to remove the stock System Tray from that panel, since both trays would
 otherwise show the same apps.
@@ -80,6 +96,9 @@ otherwise show the same apps.
 - `third_party/libdbusmenuqt/`: plasma-workspace's private copy of
   libdbusmenuqt, vendored because it is not installed as a library.
 - `autotests/`: tests for the whitelist rule.
+- `plasma5/`: the Plasma 5.27 fork, same layout as upstream (`src/`,
+  `package/` QML, `container/` panel wrapper); the settings page is
+  `plasma5/package/contents/ui/ConfigEntries.qml`.
 
 ## License
 

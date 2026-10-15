@@ -1,0 +1,34 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Marco Martin",
+                "Email": "mart@kde.org"
+            },
+            {
+                "Name": "V (whitelist fork)"
+            }
+        ],
+        "BugReportUrl": "https://github.com/codegod100/kde/issues",
+        "Category": "Windows and Tasks",
+        "Description": "Internal containment of the Whitelist System Tray",
+        "EnabledByDefault": false,
+        "FormFactors": [
+            "desktop"
+        ],
+        "Icon": "preferences-desktop-notification",
+        "Id": "org.kde.plasma.private.whitelisttray",
+        "License": "GPL-2.0+",
+        "Name": "Whitelist System Tray (internal)",
+        "ServiceTypes": [
+            "Plasma/Applet",
+            "Plasma/Containment"
+        ],
+        "Version": "5.27.0.1",
+        "Website": "https://github.com/codegod100/kde/tree/main/tray/plasma5"
+    },
+    "NoDisplay": true,
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-ContainmentType": "Panel",
+    "X-Plasma-MainScript": "ui/main.qml"
+}

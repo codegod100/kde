@@ -1,0 +1,31 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Marco Martin",
+                "Email": "mart@kde.org"
+            },
+            {
+                "Name": "V (whitelist fork)"
+            }
+        ],
+        "BugReportUrl": "https://github.com/codegod100/kde/issues",
+        "Category": "Windows and Tasks",
+        "Description": "System tray that keeps every icon in the popup unless you whitelist it for the panel",
+        "EnabledByDefault": false,
+        "FormFactors": [
+            "desktop"
+        ],
+        "Icon": "preferences-desktop-notification",
+        "Id": "org.kde.plasma.whitelisttray",
+        "License": "GPL-2.0+",
+        "Name": "Whitelist System Tray",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "5.27.0.1",
+        "Website": "https://github.com/codegod100/kde/tree/main/tray/plasma5"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml"
+}

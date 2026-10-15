@@ -44,3 +44,25 @@ jobs:
       - name: Build and test
         working-directory: tray
         run: pixi run --locked test
+
+  build-plasma5:
+    # Plasma 5.27 build for Ubuntu 24.04 and other distros still on Plasma 5.
+    runs-on: ubuntu-latest
+    container: ubuntu:24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            build-essential ca-certificates curl gettext \
+            qtbase5-dev qtbase5-private-dev qtdeclarative5-dev \
+            libkf5plasma-dev libkf5xmlgui-dev libkf5i18n-dev libkf5itemmodels-dev libkf5iconthemes-dev \
+            libkf5windowsystem-dev libkf5notifications-dev libkf5config-dev libkf5coreaddons-dev \
+            qtwayland5-private-dev qtwayland5-dev-tools libwayland-dev wayland-protocols
+      - name: Install pixi
+        run: |
+          curl -fsSL https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-unknown-linux-musl.tar.gz | tar xz -C /usr/local/bin
+      - name: Build and test
+        working-directory: tray
+        run: pixi run --locked test-plasma5
