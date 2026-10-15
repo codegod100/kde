@@ -18,7 +18,7 @@
         "Icon": "preferences-desktop-notification",
         "License": "GPL-2.0+",
         "Name": "Whitelist System Tray",
-        "Website": "https://github.com/codegod100/whitelist-tray",
+        "Website": "https://github.com/codegod100/tray",
         "Version": "6.7.0.1"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
