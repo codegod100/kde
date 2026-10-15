@@ -24,3 +24,18 @@ jobs:
           curl -fsSL https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-unknown-linux-musl.tar.gz | tar xz -C /usr/local/bin
       - name: Build and test
         run: pixi run --locked test
+
+  build-arch:
+    # Arch tracks the newest Plasma/Qt, catching libplasma API changes early.
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm --needed base-devel git curl libplasma kstatusnotifieritem kio kxmlgui kitemmodels kiconthemes ki18n kconfig kservice kwindowsystem kjobwidgets qt6-base qt6-declarative
+      - uses: actions/checkout@v4
+      - name: Install pixi
+        run: |
+          curl -fsSL https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-unknown-linux-musl.tar.gz | tar xz -C /usr/local/bin
+      - name: Build and test
+        run: pixi run --locked test

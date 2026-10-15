@@ -251,7 +251,6 @@ void SystemTray::migrateFromSystrayContainer()
     }
 
     // Delete the the old systray
-    bool oldSystrayInstantiated = false;
     for (Plasma::Containment *cont : corona()->containments()) {
         if (cont->id() == oldSystrayId) {
             delete cont;
@@ -505,7 +504,9 @@ void SystemTray::startApplet(const QString &pluginId)
 
     // known one, recycle the id to reuse old config
     if (m_configGroupIds.contains(pluginId)) {
-        Applet *applet = Plasma::PluginLoader::self()->loadApplet(pluginId, m_configGroupIds.value(pluginId), QVariantList());
+        // libplasma 6.8 returns std::unique_ptr here and addApplet() takes ownership
+        // of it; older versions use raw pointers. auto + std::move works with both.
+        auto applet = Plasma::PluginLoader::self()->loadApplet(pluginId, m_configGroupIds.value(pluginId), QVariantList());
         // this should never happen unless explicitly wrong config is hand-written or
         //(more likely) a previously added applet is uninstalled
         if (!applet) {
@@ -513,10 +514,10 @@ void SystemTray::startApplet(const QString &pluginId)
             return;
         }
         applet->setProperty("org.kde.plasma:force-create", true);
-        addApplet(applet);
+        addApplet(std::move(applet));
         // create a new one automatic id, new config group
     } else {
-        Applet *applet = createApplet(pluginId, QVariantList() << u"org.kde.plasma:force-create"_s);
+        auto applet = createApplet(pluginId, QVariantList() << u"org.kde.plasma:force-create"_s);
         if (applet) {
             m_configGroupIds[pluginId] = applet->id();
         }
