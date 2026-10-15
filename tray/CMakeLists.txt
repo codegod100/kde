@@ -10,6 +10,12 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(KDE_COMPILERSETTINGS_LEVEL "6.0")
 
+# Never pick up Qt or KDE libraries from a pixi/conda env: the widget is loaded
+# into the system plasmashell and must link the distro's Qt and KF libraries.
+if(DEFINED ENV{CONDA_PREFIX})
+    list(APPEND CMAKE_IGNORE_PREFIX_PATH "$ENV{CONDA_PREFIX}")
+endif()
+
 # Check for the system Qt first: without it ECM's KDEInstallDirs fails with a
 # cryptic "No Qt6 qtpaths executable found".
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG QUIET COMPONENTS Core)

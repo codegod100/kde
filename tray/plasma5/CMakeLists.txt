@@ -12,6 +12,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(KDE_COMPILERSETTINGS_LEVEL "5.82")
 
+# Never pick up Qt or KDE libraries from a pixi/conda env: the widget is loaded
+# into the system plasmashell and must link the distro's Qt and KF libraries.
+if(DEFINED ENV{CONDA_PREFIX})
+    list(APPEND CMAKE_IGNORE_PREFIX_PATH "$ENV{CONDA_PREFIX}")
+endif()
+
 find_package(Qt5Core ${QT_MIN_VERSION} CONFIG QUIET)
 if(NOT Qt5Core_FOUND)
     message(FATAL_ERROR
