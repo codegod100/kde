@@ -38,8 +38,8 @@ tests:
 
 about:
   summary: Loop-inspired KDE Plasma 6 panel head with cursor-following eyes; host-Qt source installer
-  homepage: https://github.com/nandi-conda/loop-eyes
-  repository: https://github.com/nandi-conda/loop-eyes
+  homepage: https://github.com/codegod100/kde/tree/main/loop-eyes
+  repository: https://github.com/codegod100/kde/tree/main/loop-eyes
   license: MIT AND LicenseRef-Loop-Avatar
   license_file:
     - LICENSE
