@@ -21,9 +21,9 @@ From Plasma: System Settings → Colors & Themes → Window Decorations →
 From a checkout:
 
 ```sh
-kde/aurorae/install.sh            # copies both themes to ~/.local/share/aurorae/themes
-kde/aurorae/install.sh --apply    # ...and switches KWin to Flatkit
-kde/aurorae/install.sh --apply dark
+aurorae/install.sh            # copies both themes to ~/.local/share/aurorae/themes
+aurorae/install.sh --apply    # ...and switches KWin to Flatkit
+aurorae/install.sh --apply dark
 ```
 
 Or pick it by hand: System Settings → Colors & Themes → Window Decorations,
@@ -36,7 +36,7 @@ Built against Plasma 6's Aurorae engine; Plasma 5 reads the same theme format.
 - **Border size: Tiny** (the dropdown under the decoration list). The theme
   draws a 1px outline; larger sizes add a frame in the title bar colour.
 - **Title font: Inter SemiBold 10pt** (System Settings → Fonts → Window
-  title). Inter ships in this repo under `fonts/`; copy it to
+  title). Inter ships under `aurorae/fonts/`; copy it to
   `~/.local/share/fonts` if it isn't installed.
 - **Buttons:** the theme draws minimize, maximize/restore, close, keep
   above/below, on all desktops, shade and help.
@@ -44,11 +44,11 @@ Built against Plasma 6's Aurorae engine; Plasma 5 reads the same theme format.
 ## Changing the theme
 
 The SVGs are generated. Edit the colours or sizes in `generate.py` (they
-mirror `lib/src/theme.dart`) and run:
+mirror flatkit's `lib/src/theme.dart` in [codegod100/flutterkit](https://github.com/codegod100/flutterkit)) and run:
 
 ```sh
-python3 kde/aurorae/generate.py
-QT_QPA_PLATFORM=offscreen python3 kde/aurorae/preview.py   # needs PySide6
+python3 aurorae/generate.py
+QT_QPA_PLATFORM=offscreen python3 aurorae/preview.py   # needs PySide6
 ```
 
 ## KDE Store

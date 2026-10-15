@@ -3,7 +3,7 @@
 out the way Aurorae does (a nine-slice frame plus buttons) with Qt's own
 SVG renderer. Needs PySide6:
 
-    QT_QPA_PLATFORM=offscreen python3 kde/aurorae/preview.py
+    QT_QPA_PLATFORM=offscreen python3 aurorae/preview.py
 """
 
 from pathlib import Path
@@ -91,7 +91,7 @@ def render(themes, out):
 
 def main():
     app = QGuiApplication([])  # noqa: F841
-    QFontDatabase.addApplicationFont(str(HERE.parent.parent / "fonts" / "Inter-SemiBold.ttf"))
+    QFontDatabase.addApplicationFont(str(HERE / "fonts" / "Inter-SemiBold.ttf"))
     render(THEMES, HERE / "preview.png")
     # One screenshot per theme for the KDE Store pages.
     for t in THEMES:

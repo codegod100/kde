@@ -54,7 +54,7 @@ directory.
 3. Build, test, install and restart Plasma:
 
    ```sh
-   git clone https://github.com/codegod100/tray && cd tray
+   git clone https://github.com/codegod100/kde && cd kde/tray
    pixi run test             # configures, builds and runs the tests
    pixi run install          # sudo install into the system plugin dir
    pixi run restart-plasma   # or log out and back in

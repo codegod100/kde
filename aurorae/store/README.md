@@ -4,9 +4,9 @@ Upload-ready files for [store.kde.org](https://store.kde.org), one product
 per theme. Rebuild them after changing the themes:
 
 ```sh
-python3 kde/aurorae/generate.py
-QT_QPA_PLATFORM=offscreen python3 kde/aurorae/preview.py   # store/*.png
-kde/aurorae/package.sh                                     # store/*.tar.gz
+python3 aurorae/generate.py
+QT_QPA_PLATFORM=offscreen python3 aurorae/preview.py   # store/*.png
+aurorae/package.sh                                     # store/*.tar.gz
 ```
 
 | Product      | File                  | Screenshot         |
@@ -34,7 +34,7 @@ rebuild, and upload the new archive on the existing product's Files tab.
 
 - **Title:** Flatkit
 - **License:** MIT
-- **Source / homepage:** https://github.com/codegod100/flutterkit
+- **Source / homepage:** https://github.com/codegod100/kde/tree/main/aurorae
 - **Tags:** flat, minimal, light, aurorae
 - **Summary:** A flat, quiet light window decoration with rounded top corners and a red-on-hover close button.
 - **Description:**
@@ -55,7 +55,7 @@ rebuild, and upload the new archive on the existing product's Files tab.
 
 - **Title:** Flatkit Dark
 - **License:** MIT
-- **Source / homepage:** https://github.com/codegod100/flutterkit
+- **Source / homepage:** https://github.com/codegod100/kde/tree/main/aurorae
 - **Tags:** flat, minimal, dark, aurorae
 - **Summary:** A flat, quiet dark window decoration with rounded top corners and a red-on-hover close button.
 - **Description:**

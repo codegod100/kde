@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Generates the Flatkit Aurorae window decorations for KDE Plasma.
 
-Colours and radii mirror lib/src/theme.dart (KitColors.light/.dark,
+Colours and radii mirror lib/src/theme.dart in codegod100/flutterkit (KitColors.light/.dark,
 kitRadius). Run it after changing either; it rewrites themes/.
 
-    python3 kde/aurorae/generate.py
+    python3 aurorae/generate.py
 """
 
 from pathlib import Path
@@ -303,7 +303,7 @@ Comment={description}
 X-KDE-PluginInfo-Author=codegod100
 X-KDE-PluginInfo-Name={plugin}
 X-KDE-PluginInfo-Version=1.0
-X-KDE-PluginInfo-Website=https://github.com/codegod100/flutterkit
+X-KDE-PluginInfo-Website=https://github.com/codegod100/kde/tree/main/aurorae
 X-KDE-PluginInfo-Category=
 X-KDE-PluginInfo-License=MIT
 X-KDE-PluginInfo-EnabledByDefault=true

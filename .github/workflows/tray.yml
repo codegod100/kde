@@ -1,8 +1,14 @@
-name: build
+name: Whitelist tray build
 
 on:
   push:
+    paths: ['tray/**', '.github/workflows/tray.yml']
   pull_request:
+    paths: ['tray/**', '.github/workflows/tray.yml']
+  workflow_dispatch:
+defaults:
+  run:
+    working-directory: tray
 
 jobs:
   build:
