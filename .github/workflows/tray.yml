@@ -6,9 +6,6 @@ on:
   pull_request:
     paths: ['tray/**', '.github/workflows/tray.yml']
   workflow_dispatch:
-defaults:
-  run:
-    working-directory: tray
 
 jobs:
   build:
@@ -29,6 +26,7 @@ jobs:
         run: |
           curl -fsSL https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-unknown-linux-musl.tar.gz | tar xz -C /usr/local/bin
       - name: Build and test
+        working-directory: tray
         run: pixi run --locked test
 
   build-arch:
@@ -44,4 +42,5 @@ jobs:
         run: |
           curl -fsSL https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-unknown-linux-musl.tar.gz | tar xz -C /usr/local/bin
       - name: Build and test
+        working-directory: tray
         run: pixi run --locked test
