@@ -20,9 +20,10 @@ struct Package {
     QString summary;
 
     QUrl pageUrl() const;
-    // `pixi add name`, with a channel prefix outside conda-forge.
+    QString channelUrl() const;
+    // `pixi add name`, adding the channel to the workspace outside conda-forge.
     QString pixiAddCommand() const;
-    // `pixi global install name`, with -c outside conda-forge.
+    // `pixi global install name`, with -c <channel url> outside conda-forge.
     QString pixiGlobalCommand() const;
 };
 

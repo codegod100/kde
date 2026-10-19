@@ -64,8 +64,8 @@ private Q_SLOTS:
         QCOMPARE(cf.pixiAddCommand(), u"pixi add numpy"_s);
         QCOMPARE(cf.pixiGlobalCommand(), u"pixi global install numpy"_s);
         const PrefixDev::Package gh{u"ripgrep"_s, u"github-releases"_s, {}, {}};
-        QCOMPARE(gh.pixiAddCommand(), u"pixi add github-releases::ripgrep"_s);
-        QCOMPARE(gh.pixiGlobalCommand(), u"pixi global install -c github-releases ripgrep"_s);
+        QCOMPARE(gh.pixiAddCommand(), u"pixi workspace channel add https://prefix.dev/github-releases && pixi add ripgrep"_s);
+        QCOMPARE(gh.pixiGlobalCommand(), u"pixi global install -c https://prefix.dev/github-releases ripgrep"_s);
     }
 };
 

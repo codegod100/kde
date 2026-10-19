@@ -19,12 +19,19 @@ QUrl Package::pageUrl() const
     return url;
 }
 
+QString Package::channelUrl() const
+{
+    return QStringLiteral("https://prefix.dev/%1").arg(channel);
+}
+
 QString Package::pixiAddCommand() const
 {
     if (channel == DefaultChannel) {
         return QStringLiteral("pixi add %1").arg(name);
     }
-    return QStringLiteral("pixi add %1::%2").arg(channel, name);
+    // A bare channel name would resolve on anaconda.org; most prefix.dev
+    // channels only exist on prefix.dev.
+    return QStringLiteral("pixi workspace channel add %1 && pixi add %2").arg(channelUrl(), name);
 }
 
 QString Package::pixiGlobalCommand() const
@@ -32,7 +39,7 @@ QString Package::pixiGlobalCommand() const
     if (channel == DefaultChannel) {
         return QStringLiteral("pixi global install %1").arg(name);
     }
-    return QStringLiteral("pixi global install -c %1 %2").arg(channel, name);
+    return QStringLiteral("pixi global install -c %1 %2").arg(channelUrl(), name);
 }
 
 QUrl endpoint()
