@@ -1,0 +1,15 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "codegod100"
+            }
+        ],
+        "Description": "Search conda packages on prefix.dev: type \"pixi <name>\"",
+        "EnabledByDefault": true,
+        "Icon": "package-x-generic",
+        "License": "MIT",
+        "Name": "prefix.dev packages",
+        "Website": "https://github.com/codegod100/kde/tree/main/prefix-runner"
+    }
+}
