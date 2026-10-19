@@ -22,10 +22,11 @@ CXX = "/usr/bin/c++"
 CMAKE_PREFIX_PATH = "/usr"
 
 [tasks]
+# Root steps use sudo, or run0 where sudo is not installed.
 configure = "cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=ON -DECM_DIR=$CONDA_PREFIX/share/ECM/cmake"
 build = { cmd = "cmake --build build", depends-on = ["configure"] }
 test = { cmd = "QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure", depends-on = ["build"] }
-install = { cmd = "sudo $CONDA_PREFIX/bin/cmake --install build", depends-on = ["build"] }
+install = { cmd = "sh -c 'root=sudo; command -v sudo >/dev/null || root=run0; $root \"$CONDA_PREFIX/bin/cmake\" --install build'", depends-on = ["build"] }
 restart-plasma = "sh -c 'setsid -f plasmashell --replace >/dev/null 2>&1'"
 clean = "rm -rf build build-plasma5"
 
@@ -33,4 +34,4 @@ clean = "rm -rf build build-plasma5"
 configure-plasma5 = "cmake -S plasma5 -B build-plasma5 -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=ON -DECM_DIR=$CONDA_PREFIX/share/ECM/cmake"
 build-plasma5 = { cmd = "cmake --build build-plasma5", depends-on = ["configure-plasma5"] }
 test-plasma5 = { cmd = "QT_QPA_PLATFORM=offscreen ctest --test-dir build-plasma5 --output-on-failure", depends-on = ["build-plasma5"] }
-install-plasma5 = { cmd = "sudo $CONDA_PREFIX/bin/cmake --install build-plasma5", depends-on = ["build-plasma5"] }
+install-plasma5 = { cmd = "sh -c 'root=sudo; command -v sudo >/dev/null || root=run0; $root \"$CONDA_PREFIX/bin/cmake\" --install build-plasma5'", depends-on = ["build-plasma5"] }

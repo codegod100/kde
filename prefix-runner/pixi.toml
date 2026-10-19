@@ -21,12 +21,13 @@ CXX = "/usr/bin/c++"
 CMAKE_PREFIX_PATH = "/usr"
 
 [tasks]
+# Root steps use sudo, or run0 where sudo is not installed.
 configure = "cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_TESTING=ON -DECM_DIR=$CONDA_PREFIX/share/ECM/cmake"
 build = { cmd = "cmake --build build", depends-on = ["configure"] }
 test = { cmd = "QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure -LE online", depends-on = ["build"] }
 test-online = { cmd = "QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure -L online", depends-on = ["build"] }
-install = { cmd = "sudo $CONDA_PREFIX/bin/cmake --install build", depends-on = ["build"] }
-uninstall = "sudo xargs rm -fv < build/install_manifest.txt"
+install = { cmd = "sh -c 'root=sudo; command -v sudo >/dev/null || root=run0; $root \"$CONDA_PREFIX/bin/cmake\" --install build'", depends-on = ["build"] }
+uninstall = "sh -c 'root=sudo; command -v sudo >/dev/null || root=run0; $root xargs rm -fv < build/install_manifest.txt'"
 # KRunner restarts on the next Alt+Space; plasmashell reloads Kickoff's search.
 restart-plasma = "sh -c 'kquitapp6 krunner >/dev/null 2>&1; setsid -f plasmashell --replace >/dev/null 2>&1'"
 clean = "rm -rf build"
