@@ -17,23 +17,23 @@ Only queries starting with the trigger word are sent to prefix.dev.
 
 ## Build and install
 
-Needs CMake, extra-cmake-modules, Qt 6 (Core, Gui, Network) and KF6 Runner,
-I18n and CoreAddons from your distro (on Arch: `krunner ki18n kcoreaddons
-qt6-base extra-cmake-modules`).
+Qt 6 (Core, Gui, Network) and KF6 Runner, I18n and CoreAddons come from your
+distro (on Arch: `sudo pacman -S --needed qt6-base krunner ki18n kcoreaddons`);
+[pixi](https://pixi.sh) provides cmake, ninja and extra-cmake-modules.
+From the repo root:
 
 ```sh
-cmake -S prefix-runner -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-cmake --build build
-sudo cmake --install build
-kquitapp6 krunner   # it restarts on the next Alt+Space
+just install prefix-runner   # tests, sudo-installs, reloads KRunner and Plasma
 ```
+
+or, inside `prefix-runner/`, the pixi tasks directly: `pixi run test`,
+`pixi run install`, `pixi run restart-plasma`, `pixi run uninstall`.
 
 Nandi OS ships it as the `nandi-prefixdev-runner` package.
 
 ## Tests
 
 ```sh
-cmake -S prefix-runner -B build -DBUILD_TESTING=ON && cmake --build build
-ctest --test-dir build -LE online   # offline: parsing, ranking, commands
-ctest --test-dir build -L online    # loads the plugin and searches prefix.dev
+pixi run test          # offline: parsing, ranking, commands
+pixi run test-online   # loads the plugin and searches prefix.dev
 ```
