@@ -20,7 +20,7 @@ private Q_SLOTS:
     {
         const QList<KRunner::QueryMatch> matches = launchQuery(u"pixi numpy"_s);
         QVERIFY(!matches.isEmpty());
-        QCOMPARE(matches.first().text(), u"numpy"_s);
+        QCOMPARE(matches.first().text(), u"numpy · conda-forge"_s);
         QVERIFY(matches.first().subtext().startsWith(u"conda-forge"_s));
         QCOMPARE(matches.first().urls().first().toString(), u"https://prefix.dev/channels/conda-forge/packages/numpy"_s);
     }

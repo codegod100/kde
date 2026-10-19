@@ -85,7 +85,9 @@ public:
             const bool exact = p.name.compare(term, Qt::CaseInsensitive) == 0;
             KRunner::QueryMatch match(this);
             match.setId(p.channel + u'/' + p.name);
-            match.setText(p.name);
+            // KRunner's compact list shows only the text, so the channel goes there
+            // too: the same name usually exists in several channels.
+            match.setText(i18nc("package name and channel", "%1 · %2", p.name, p.channel));
             QString subtext = p.version.isEmpty() ? p.channel : i18nc("channel and version", "%1 · %2", p.channel, p.version);
             if (!p.summary.isEmpty()) {
                 subtext = i18nc("channel/version and package summary", "%1 · %2", subtext, p.summary);
