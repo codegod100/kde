@@ -53,9 +53,10 @@ upgrades. No conda Qt library is bundled or loaded into system plasmashell.
 After installation:
 
 1. System Settings → Window Management → KWin Scripts: enable **Loop Eyes Cursor**.
-2. Add **Loop Eyes — Panel Head** to your panel. The original **Loop Eyes** portrait
-   remains optional. Keep both widget packages installed because they share the
-   original package's native bridge and gaze helper.
+2. Add **Loop Eyes — Panel Head** to your panel. The original **Loop Eyes**
+   portrait package is hidden from Add Widgets (`NoDisplay`) because it only
+   carries the native bridge and gaze helper the panel head loads; keep both
+   packages installed. Portraits already placed keep working.
 
 Package IDs: `org.loop.eyes`, `org.loop.eyes.panel`, `org.loop.eyes.cursor`.
 No pointer history, networking, telemetry, keyboard access or shell polling.
