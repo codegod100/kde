@@ -21,8 +21,8 @@ if [[ $mode == --build-only ]]; then
 fi
 stage=$(mktemp -d)
 trap 'rm -rf -- "$stage"' EXIT
-cp -R "$root/plasmoid" "$stage/plasmoid"
-cp "$build_dir/backend/libloopeyesbackend.so" "$stage/plasmoid/contents/ui/backend/"
+cp -R "$root/panel" "$stage/panel"
+cp "$build_dir/backend/libloopeyesbackend.so" "$stage/panel/contents/ui/backend/"
 data=${XDG_DATA_HOME:-"$HOME/.local/share"}
 install_package() {
     local type=$1 id=$2 source=$3 directory=$4
@@ -31,6 +31,9 @@ install_package() {
     kpackagetool6 --type "$type" "$action" "$source"
 }
 install_package KWin/Script org.loop.eyes.cursor "$root/kwin" "$data/kwin/scripts"
-install_package Plasma/Applet org.loop.eyes "$stage/plasmoid" "$data/plasma/plasmoids"
-install_package Plasma/Applet org.loop.eyes.panel "$root/panel" "$data/plasma/plasmoids"
+install_package Plasma/Applet org.loop.eyes.panel "$stage/panel" "$data/plasma/plasmoids"
+# Older versions also installed the portrait widget that carried the bridge.
+if [[ -d "$data/plasma/plasmoids/org.loop.eyes" ]]; then
+    kpackagetool6 --type Plasma/Applet --remove org.loop.eyes || true
+fi
 printf '\nInstalled for your user. Next:\n1. System Settings → Window Management → KWin Scripts: enable “Loop Eyes Cursor”, then Apply.\n2. Panel edit mode → Add Widgets: add “Loop Eyes — Panel Head”.\nIf updating a loaded native plugin, log out and back in before testing.\n'

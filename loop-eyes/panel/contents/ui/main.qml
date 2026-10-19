@@ -3,9 +3,8 @@ import QtQuick
 import QtQuick.Layouts
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasmoid
-// Both variants import the same installed bridge, sharing one native endpoint.
-import "../../../org.loop.eyes/contents/ui/backend" as Backend
-import "../../../org.loop.eyes/contents/ui/gaze.js" as Gaze
+import "backend" as Backend
+import "gaze.js" as Gaze
 
 PlasmoidItem {
     id: root

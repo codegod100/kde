@@ -3,7 +3,7 @@
 A quiet KDE Plasma 6 panel companion: a compact blue head with oversized cream
 eyes, navy pupils, a small gold forehead dot, and tiny lower lobes. Inspired by
 Loop's octopus avatar, its eyes follow the cursor over other applications using
-a local KWin script. The original image portrait is also included.
+a local KWin script.
 
 Canonical source: [codegod100/kde/loop-eyes](https://github.com/codegod100/kde/tree/main/loop-eyes).
 
@@ -16,7 +16,7 @@ just install loop-eyes
 ```
 
 This builds the native bridge against your system Qt, runs the tests, installs
-the three user-local packages, turns on the **Loop Eyes Cursor** KWin script
+the panel widget and KWin script, turns on the **Loop Eyes Cursor** KWin script
 and refreshes plasmashell. Then add **Loop Eyes — Panel Head** to your panel.
 `just run loop-eyes uninstall` removes it again.
 
@@ -30,7 +30,8 @@ loop-eyes-install --install
 
 This is a **source-only `noarch` conda package for Linux**, not a prebuilt Qt
 plugin. The explicit installer builds the small native bridge against your
-system Qt, then installs three user-local desktop packages. It does not enable
+system Qt, then installs two user-local desktop packages (the panel widget and
+the KWin script). It does not enable
 the script, add widgets, restart the shell, or install system dependencies.
 There are no conda post-link, activation, or removal hooks.
 
@@ -53,12 +54,11 @@ upgrades. No conda Qt library is bundled or loaded into system plasmashell.
 After installation:
 
 1. System Settings → Window Management → KWin Scripts: enable **Loop Eyes Cursor**.
-2. Add **Loop Eyes — Panel Head** to your panel. The original **Loop Eyes**
-   portrait package is hidden from Add Widgets (`NoDisplay`) because it only
-   carries the native bridge and gaze helper the panel head loads; keep both
-   packages installed. Portraits already placed keep working.
+2. Add **Loop Eyes — Panel Head** to your panel.
 
-Package IDs: `org.loop.eyes`, `org.loop.eyes.panel`, `org.loop.eyes.cursor`.
+Package IDs: `org.loop.eyes.panel`, `org.loop.eyes.cursor`. The panel widget
+carries its own native bridge and gaze helper. Older versions also installed a
+separate `org.loop.eyes` portrait widget; the installer removes it.
 No pointer history, networking, telemetry, keyboard access or shell polling.
 The bridge accepts updates only from the current KWin D-Bus owner. Missing
 updates center the pupils after about 2.5 seconds; one-second heartbeats keep a
@@ -74,7 +74,7 @@ never performs any restart itself.
 
 Remove the Loop widget from the panel, then run `loop-eyes-uninstall` before
 removing the conda package. This disables only the Loop KWin script and removes
-its three user-local desktop packages. Log out normally later to unload native
+its user-local desktop packages. Log out normally later to unload native
 code. Removing the conda package alone leaves the separately installed desktop
 widget intact. Other widgets are not changed.
 
@@ -108,8 +108,7 @@ disconnect/reconnect passed. Multiple displays, mixed scaling, other panel
 orientations, hotplug and compositor restart still need testing. Plasma and
 KWin are system runtime dependencies; this is not a standalone desktop pet.
 
-Code is MIT licensed. The original bundled avatar is user-supplied artwork and
-is not covered by the code license; see [LICENSE-AVATAR](LICENSE-AVATAR).
+Code is MIT licensed.
 
 References: [KWin scripting API](https://develop.kde.org/docs/plasma/kwin/api/)
 and [Qt plugin deployment](https://doc.qt.io/qt-6/deployment-plugins.html).
@@ -118,5 +117,5 @@ and [Qt plugin deployment](https://doc.qt.io/qt-6/deployment-plugins.html).
 
 Imported from `nandi-conda/loop-eyes` at commit
 `fc512afdcd63c87ab961d2fa8d0946f2ca81abec`, preserving the original Git history.
-The panel, portrait, KWin script, and native bridge match the source installed
+The panel, KWin script, and native bridge matched the source installed
 on the migration host; generated binaries and desktop settings are excluded.

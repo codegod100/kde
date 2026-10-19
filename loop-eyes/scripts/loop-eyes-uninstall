@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 set -euo pipefail
 if [[ ${1:-} == --help || ${1:-} == -h ]]; then
-    echo 'Usage: loop-eyes-uninstall (disables the Loop script and removes its three desktop packages)'
+    echo 'Usage: loop-eyes-uninstall (disables the Loop script and removes its desktop packages)'
     echo 'Remove the panel widget first. Removing the conda package alone does not remove desktop packages.'
     exit 0
 fi

@@ -32,15 +32,11 @@ tests:
       files:
         - share/loop-eyes/source/backend/plugin.cpp
         - share/loop-eyes/source/panel/contents/ui/main.qml
-        - share/loop-eyes/source/plasmoid/contents/images/loop-avatar.png
         - share/loop-eyes/source/LICENSE
-        - share/loop-eyes/source/LICENSE-AVATAR
 
 about:
   summary: Loop-inspired KDE Plasma 6 panel head with cursor-following eyes; host-Qt source installer
   homepage: https://github.com/codegod100/kde/tree/main/loop-eyes
   repository: https://github.com/codegod100/kde/tree/main/loop-eyes
-  license: MIT AND LicenseRef-Loop-Avatar
-  license_file:
-    - LICENSE
-    - LICENSE-AVATAR
+  license: MIT
+  license_file: LICENSE

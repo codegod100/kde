@@ -7,7 +7,7 @@ let passed = 0;
 function test(name, fn) { fn(); passed++; console.log('PASS ' + name); }
 const gaze = {};
 vm.createContext(gaze);
-vm.runInContext(fs.readFileSync(root + '/plasmoid/contents/ui/gaze.js', 'utf8'), gaze);
+vm.runInContext(fs.readFileSync(root + '/panel/contents/ui/gaze.js', 'utf8'), gaze);
 test('centered and invalid inputs are neutral', () => {
  for (const [x,y] of [[0,0],[NaN,1],[1,Infinity]]) {
   assert.equal(gaze.offset(x,y,12,11,160).x,0);
@@ -48,11 +48,11 @@ test('stationary heartbeat and missing receiver recovery need no callback',()=>{
  calls=[]; for(let i=0;i<60;i++) tick();
  assert.equal(calls.length,2); assert.equal(calls[0].length,5);
 });
-test('package metadata and avatar paths exist',()=>{
- for(const [folder,id] of [['plasmoid','org.loop.eyes'],['kwin','org.loop.eyes.cursor']]) {
+test('package metadata paths exist',()=>{
+ for(const [folder,id] of [['panel','org.loop.eyes.panel'],['kwin','org.loop.eyes.cursor']]) {
  const p=JSON.parse(fs.readFileSync(root+'/'+folder+'/metadata.json'));
  assert.equal(p.KPlugin.Id,id);
  }
- assert.ok(fs.statSync(root+'/plasmoid/contents/images/loop-avatar.png').size>0);
+ assert.equal(fs.readFileSync(root+'/panel/contents/ui/backend/qmldir','utf8').trim(),'plugin loopeyesbackend');
 });
 console.log(`${passed} tests passed`);
