@@ -13,7 +13,7 @@ Components with a `pixi.toml` build with [pixi](https://pixi.sh) and install
 through [just](https://just.systems):
 
 ```sh
-just install prefix-runner   # or: just install tray
+just install prefix-runner   # or: just install tray, just install loop-eyes
 just components              # what `just install` accepts
 just run tray clean          # any pixi task of a component
 ```

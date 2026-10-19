@@ -7,6 +7,19 @@ a local KWin script. The original image portrait is also included.
 
 Canonical source: [codegod100/kde/loop-eyes](https://github.com/codegod100/kde/tree/main/loop-eyes).
 
+## Install with just
+
+From a checkout of this repository, as your desktop user (no sudo):
+
+```sh
+just install loop-eyes
+```
+
+This builds the native bridge against your system Qt, runs the tests, installs
+the three user-local packages, turns on the **Loop Eyes Cursor** KWin script
+and refreshes plasmashell. Then add **Loop Eyes — Panel Head** to your panel.
+`just run loop-eyes uninstall` removes it again.
+
 ## Install from prefix.dev
 
 ```sh

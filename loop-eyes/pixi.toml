@@ -1,0 +1,32 @@
+# Pixi provides the build tooling (cmake, ninja) and node for the tests.
+# Qt 6 and the Plasma runtime must come from your distro: the native bridge is
+# loaded into the system plasmashell, so it has to link its exact Qt anyway.
+# On Arch: sudo pacman -S --needed gcc qt6-base qt6-declarative kpackage kconfig
+
+[workspace]
+name = "loop-eyes"
+channels = ["conda-forge"]
+platforms = ["linux-64", "linux-aarch64"]
+
+[dependencies]
+cmake = ">=3.22"
+ninja = "*"
+nodejs = ">=18"
+
+[activation.env]
+# Use the system compiler and system Qt, never anything from the pixi env.
+CC = "/usr/bin/cc"
+CXX = "/usr/bin/c++"
+CMAKE_PREFIX_PATH = "/usr"
+CMAKE_GENERATOR = "Ninja"
+
+[tasks]
+# Loop Eyes installs per user (~/.local/share), so no task needs root.
+build = "bash install.sh --build-only"
+test = { cmd = "node tests/test.js && bash -n install.sh uninstall.sh", depends-on = ["build"] }
+# Also turns on the KWin script that feeds the cursor position to the eyes.
+install = "sh -c 'bash install.sh --install && kwriteconfig6 --file kwinrc --group Plugins --key org.loop.eyes.cursorEnabled true && { qdbus6 org.kde.KWin /KWin reconfigure || true; }'"
+uninstall = "bash uninstall.sh"
+# Refresh plasmashell through its user service (never restart KWin).
+restart-plasma = "sh -c 'systemctl --user restart plasma-plasmashell.service 2>/dev/null || setsid -f plasmashell --replace >/dev/null 2>&1'"
+clean = "rm -rf build"
